@@ -10,18 +10,25 @@ class Game
 
 	def start
 		engine = ::GameEngine.new(@player1, @player2)
+		puts "player2:\n#{@player2.holes}, store_house: #{@player2.store_house}"
+		puts "player1:\nstore_house: #{@player1.store_house}, #{@player1.holes.reverse}\n"
+		::CongklakImageConsole.draw_congklak(@player1, @player2)
 		until round_end? do
 			puts engine.status[:turn]
 			puts "Select number holes:"
 			hole_number = gets.chomp
-			hole_number = hole_number.to_i
+			hole_number = change_to_numeric(hole_number)
 
-			engine.start_play(hole_number)
-			@player1 = engine.player1_result
-			@player2 = engine.player2_result
+			if input_valid?(hole_number) && !hole_empty?(engine.status[:turn], hole_number)
+				engine.start_play(hole_number)
+				@player1 = engine.player1_result
+				@player2 = engine.player2_result
 
-			puts "player1:/n#{@player1.holes}, store_house: #{@player1.store_house}"
-			puts "player2:/n#{@player2.holes}, store_house: #{@player2.store_house}"
+				puts "player2:\n#{@player2.holes}, store_house: #{@player2.store_house}"
+				puts "player1:\nstore_house: #{@player1.store_house}, #{@player1.holes.reverse}\n"
+			else
+				puts "Please select number hole from 1 - 7 and hole with shell in it"
+			end
 		end
 
 		if @player1.holes_empty?
@@ -33,6 +40,8 @@ class Game
 		end	
 	end
 
+	private
+
 	def round_end?
 		@player1.holes_empty? || @player2.holes_empty?
 	end
@@ -40,5 +49,28 @@ class Game
 	def get_remaining_shell(player)
 		remaining_shell = player.holes.inject(:+)
 		remaining_shell
+	end
+
+	def change_to_numeric(input)
+		begin
+			Integer(input)
+		rescue ArgumentError, TypeError
+			puts "Invalid input."
+		end
+	end
+
+	def input_valid?(input)
+		input >= 1 && input <= 7
+	end
+
+	def hole_empty?(turn, hole_number)
+		index_array = hole_number - 1
+		if turn == ::GameEngine::PLAYER1
+			@player1.holes[index_array] == 0
+		elsif turn == ::GameEngine::PLAYER2
+			@player2.holes[index_array] == 0
+		else
+			true
+		end
 	end
 end
