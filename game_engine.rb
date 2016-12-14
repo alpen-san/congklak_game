@@ -88,10 +88,12 @@ class GameEngine
 
 	def tembak!
 		if is_turn_player1? && is_hole_place_player1? && @status[:index_last_hole] != -1
+			congklak_image_console.draw_congklak(@player1_result, @player2_result)
 			index_opponent = 6 - @status[:index_last_hole]
 			@player1_result.store_house += @player2_result.holes[index_opponent]
 			@player2_result.holes[index_opponent] = 0
 		elsif is_turn_player2? && is_hole_place_player2? && @status[:index_last_hole] != -1
+			congklak_image_console.draw_congklak(@player1_result, @player2_result)
 			index_opponent = 6 - @status[:index_last_hole]
 			@player2_result.store_house += @player1_result.holes[index_opponent]
 			@player1_result.holes[index_opponent] = 0
@@ -107,5 +109,9 @@ class GameEngine
 	def can_put_shell_in_store_house?(player_place)
 		(is_turn_player1? && is_hole_place_player1?) ||
 			(is_turn_player2? && is_hole_place_player2?)
+	end
+
+	def congklak_image_console
+		@congklak_image_console ||= ::CongklakImageConsole
 	end
 end
