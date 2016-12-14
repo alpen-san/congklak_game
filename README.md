@@ -12,3 +12,11 @@ To play this game,
 game = Game.new
 game.start
 ```
+## Gameplay
+1. Player 1 is always the first to move
+2. Input hole number from 1 - 7 (the numbering of hole is sorted clockwise)
+3. Input 'q' to exit from game
+4. If you have exit the game, you can continue the game by run: (as long as not exit from ruby console)
+```ruby
+game.start #the variable is the same with variable when initialize the game
+```
