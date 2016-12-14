@@ -91,7 +91,7 @@ class GameEngine
 			index_opponent = 6 - @status[:index_last_hole]
 			@player1_result.store_house += @player2_result.holes[index_opponent]
 			@player2_result.holes[index_opponent] = 0
-		elsif is_turn_player1? && is_hole_place_player2? && @status[:index_last_hole] != -1
+		elsif is_turn_player2? && is_hole_place_player2? && @status[:index_last_hole] != -1
 			index_opponent = 6 - @status[:index_last_hole]
 			@player2_result.store_house += @player1_result.holes[index_opponent]
 			@player1_result.holes[index_opponent] = 0
