@@ -30,7 +30,7 @@ class Game
 
 				::CongklakImageConsole.draw_congklak(@player1, @player2)
 			else
-				puts "Please select number hole from 1 - 7 and hole with shell in it\n"
+				puts "Please select number hole from 1 - 7 and hole with shell in it\n\n"
 			end
 		end
 
@@ -42,12 +42,12 @@ class Game
 			@player1.holes = Array.new(7, 0)
 		end
 
-		if @player1.status != ::Player::PLAYING || @player2.status != ::Player::PLAYING
+		if @player1.status == ::Player::PLAYING || @player2.status == ::Player::PLAYING
 			change_status_player!
 			::CongklakImageConsole.draw_congklak(@player1, @player2)
-			puts "#{@player1.name} is the #{@player1.status}"
-			puts "#{@player2.name} is the #{@player2.status}"
 		end
+		puts "#{@player1.name} is the #{@player1.status}"
+		puts "#{@player2.name} is the #{@player2.status}"
 	end
 
 	private
